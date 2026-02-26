@@ -344,7 +344,7 @@ a {
     position: relative;
     display: block;
     width: calc(100% + 1.3px);
-    height: 100px;
+    height: 80px;
     transform: rotateX(180deg);
 }
 
