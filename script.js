@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Navbar Scroll Effect
     const navbar = document.getElementById('navbar');
-    
+
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             navbar.classList.add('scrolled');
@@ -66,4 +66,50 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }, 100); // slight delay to ensure DOM paint
+
+    // 4. Animated Counters for Trust Banner
+    const counters = document.querySelectorAll('.stat-number');
+    let hasAnimated = false;
+
+    const counterObserver = new IntersectionObserver((entries) => {
+        const entry = entries[0];
+        if (entry.isIntersecting && !hasAnimated) {
+            hasAnimated = true;
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const duration = 2000; // 2 seconds
+                const increment = target / (duration / 16); // 60fps
+
+                let current = 0;
+                const updateCounter = () => {
+                    current += increment;
+                    if (current < target) {
+                        counter.innerText = Math.ceil(current);
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        counter.innerText = target;
+                    }
+                };
+                updateCounter();
+            });
+        }
+    }, { threshold: 0.5 });
+
+    const trustBanner = document.querySelector('.trust-banner');
+    if (trustBanner) {
+        counterObserver.observe(trustBanner);
+    }
+
+    // 5. Mouse tracking glow effect on Service Cards
+    const cards = document.querySelectorAll('.service-card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        });
+    });
 });

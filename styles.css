@@ -13,6 +13,10 @@
     --nav-height: 80px;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -147,6 +151,18 @@ a {
     letter-spacing: 2px;
     color: var(--text-secondary);
     margin-top: 2px;
+}
+
+.navbar-logo {
+    height: 55px;
+    width: auto;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.navbar-logo:hover {
+    transform: scale(1.05);
 }
 
 .nav-links {
@@ -294,6 +310,16 @@ a {
     margin-bottom: 40px;
 }
 
+.hero-logo {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 30px;
+    box-shadow: 0 0 40px rgba(212, 175, 55, 0.3), 0 0 80px rgba(212, 175, 55, 0.1);
+    border: 3px solid rgba(212, 175, 55, 0.4);
+}
+
 .hero-buttons {
     display: flex;
     gap: 20px;
@@ -348,6 +374,10 @@ a {
     transition-delay: 0.6s;
 }
 
+.delay-4 {
+    transition-delay: 0.8s;
+}
+
 /* General Sections */
 .section {
     padding: 100px 0;
@@ -383,6 +413,7 @@ a {
 .service-card {
     background: var(--secondary-bg);
     border: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 3px solid var(--accent-gold);
     padding: 40px 30px;
     border-radius: 20px;
     transition: all 0.4s ease;
@@ -426,6 +457,74 @@ a {
 
 .service-card p {
     color: var(--text-secondary);
+}
+
+/* Testimonials Section */
+.testimonials {
+    background: var(--primary-bg);
+}
+
+.testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+}
+
+.testimonial-card {
+    background: var(--secondary-bg);
+    border: 1px solid rgba(212, 175, 55, 0.2);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.testimonial-card::before {
+    content: '\201C';
+    position: absolute;
+    top: 15px;
+    left: 25px;
+    font-size: 4rem;
+    font-family: var(--font-heading);
+    color: rgba(212, 175, 55, 0.15);
+    line-height: 1;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212, 175, 55, 0.5);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.stars {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    letter-spacing: 3px;
+}
+
+.testimonial-quote {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    font-style: italic;
+    line-height: 1.7;
+    margin-bottom: 25px;
+}
+
+.testimonial-author {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.testimonial-author strong {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.testimonial-author span {
+    font-size: 0.9rem;
+    color: var(--accent-gold);
 }
 
 /* About Section */
@@ -540,6 +639,22 @@ a {
     background: rgba(255, 255, 255, 0.1);
 }
 
+.form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23D4AF37'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 20px;
+    cursor: pointer;
+}
+
+.form-select option {
+    background: var(--secondary-bg);
+    color: var(--text-primary);
+}
+
 /* Footer */
 .footer {
     background: var(--primary-bg);
@@ -596,6 +711,158 @@ a {
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
+.footer-logo {
+    height: 80px;
+    width: auto;
+    border-radius: 8px;
+    object-fit: contain;
+}
+
+.footer-contact-link {
+    color: var(--accent-gold) !important;
+    transition: color 0.3s ease;
+}
+
+.footer-contact-link:hover {
+    color: var(--accent-gold-light) !important;
+}
+
+/* Header Contact Additions */
+.header-contact {
+    display: none;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-phone {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+}
+
+@media (min-width: 992px) {
+    .header-contact {
+        display: flex;
+    }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--primary-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--accent-gold);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-gold-light);
+}
+
+/* Trust Stats Banner */
+.trust-banner {
+    background: var(--secondary-bg);
+    padding: 60px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.trust-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 30px;
+    text-align: center;
+}
+
+.stat-item {
+    padding: 20px;
+}
+
+.stat-number,
+.stat-icon {
+    font-size: 3.5rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--text-primary);
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.stat-item p {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Floating CTA Button */
+.floating-cta {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: var(--gradient-gold);
+    color: var(--primary-bg);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4);
+    z-index: 1000;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.floating-cta:hover {
+    transform: scale(1.1) rotate(10deg);
+    box-shadow: 0 6px 25px rgba(212, 175, 55, 0.6);
+}
+
+@keyframes pulse-ring {
+    0% {
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), 0 0 0 0 rgba(212, 175, 55, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), 0 0 0 15px rgba(212, 175, 55, 0);
+    }
+
+    100% {
+        box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4), 0 0 0 0 rgba(212, 175, 55, 0);
+    }
+}
+
+.floating-cta {
+    animation: pulse-ring 2s ease infinite;
+}
+
+/* Mouse tracking glow override for Service Card */
+.service-card {
+    /* Set custom vars inside the wrapper script.js injected */
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+}
+
+.service-card::before {
+    background: radial-gradient(800px circle at var(--mouse-x) var(--mouse-y),
+            rgba(212, 175, 55, 0.06),
+            transparent 40%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* Ensure card text is above glow */
+.service-card>* {
+    position: relative;
+    z-index: 2;
+}
+
 /* Responsive */
 @media (max-width: 992px) {
     .about-content {
@@ -624,5 +891,9 @@ a {
 
     .footer-links {
         gap: 40px;
+    }
+
+    .testimonials-grid {
+        grid-template-columns: 1fr;
     }
 }
