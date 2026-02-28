@@ -10,14 +10,22 @@ require_once __DIR__ . '/config.php';
 session_start();
 
 $method = $_SERVER['REQUEST_METHOD'];
-$action = $_GET['action'] ?? $_POST['action'] ?? '';
+
+// Parse JSON body (the admin panel sends everything as JSON)
+$jsonBody = [];
+if ($method === 'POST') {
+    $rawBody = file_get_contents('php://input');
+    $jsonBody = json_decode($rawBody, true) ?? [];
+}
+
+// Action can come from query string, form POST, or JSON body
+$action = $_GET['action'] ?? $_POST['action'] ?? $jsonBody['action'] ?? '';
 
 // ─── Public endpoints ────────────────────────────────────────
 
 // Login
 if ($action === 'login' && $method === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
-    if (!$input) $input = $_POST;
+    $input = !empty($jsonBody) ? $jsonBody : $_POST;
     
     $password = $input['password'] ?? '';
     
@@ -84,8 +92,7 @@ if ($action === 'approved' && $method === 'GET') {
 
 // Approve a review
 if ($action === 'approve' && $method === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
-    if (!$input) $input = $_POST;
+    $input = !empty($jsonBody) ? $jsonBody : $_POST;
     
     $reviewId = sanitizeInput($input['id'] ?? '');
     
@@ -123,8 +130,7 @@ if ($action === 'approve' && $method === 'POST') {
 
 // Reject (delete) a review
 if ($action === 'reject' && $method === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
-    if (!$input) $input = $_POST;
+    $input = !empty($jsonBody) ? $jsonBody : $_POST;
     
     $reviewId = sanitizeInput($input['id'] ?? '');
     
@@ -156,8 +162,7 @@ if ($action === 'reject' && $method === 'POST') {
 
 // Delete an approved review
 if ($action === 'delete' && $method === 'POST') {
-    $input = json_decode(file_get_contents('php://input'), true);
-    if (!$input) $input = $_POST;
+    $input = !empty($jsonBody) ? $jsonBody : $_POST;
     
     $reviewId = sanitizeInput($input['id'] ?? '');
     
