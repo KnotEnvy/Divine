@@ -63,7 +63,7 @@ if (!empty($errors)) {
 $serviceLabels = [
     'deep'       => 'Luxury Deep Cleaning',
     'recurring'  => 'Recurring Maintenance',
-    'commercial' => 'Commercial Properties'
+    'vacation'   => 'Vacation Rentals'
 ];
 $serviceLabel = $serviceLabels[$service] ?? $service;
 
