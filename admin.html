@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Divine Cleaning Pros LLC</title>
+    <meta name="robots" content="noindex, nofollow">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-bg: #0a0a0a;
+            --secondary-bg: #1a1a1a;
+            --card-bg: #222222;
+            --text-primary: #fcfcfc;
+            --text-secondary: #aaaaaa;
+            --accent-gold: #D4AF37;
+            --accent-gold-light: #FFDF73;
+            --gradient-gold: linear-gradient(135deg, var(--accent-gold-light) 0%, var(--accent-gold) 100%);
+            --danger: #e74c3c;
+            --danger-hover: #c0392b;
+            --success: #27ae60;
+            --success-hover: #219a52;
+            --font-heading: 'Playfair Display', serif;
+            --font-body: 'Inter', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ─── Login Screen ─────────────────────────────── */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--secondary-bg);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            border-radius: 20px;
+            padding: 50px 40px;
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .login-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .login-card h1 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .login-card .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        .login-input:focus {
+            border-color: var(--accent-gold);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .login-error {
+            color: var(--danger);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            min-height: 22px;
+        }
+
+        /* ─── Buttons ──────────────────────────────────── */
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: none;
+            font-family: var(--font-body);
+        }
+
+        .btn-gold {
+            background: var(--gradient-gold);
+            color: var(--primary-bg);
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            width: 100%;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .btn-gold:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-approve {
+            background: var(--success);
+            color: white;
+            padding: 10px 24px;
+            font-size: 0.9rem;
+        }
+
+        .btn-approve:hover {
+            background: var(--success-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-reject {
+            background: var(--danger);
+            color: white;
+            padding: 10px 24px;
+            font-size: 0.9rem;
+        }
+
+        .btn-reject:hover {
+            background: var(--danger-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-delete {
+            background: transparent;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            padding: 8px 18px;
+            font-size: 0.8rem;
+        }
+
+        .btn-delete:hover {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* ─── Dashboard ────────────────────────────────── */
+        .dashboard {
+            display: none;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .dashboard-header h1 {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+        }
+
+        .dashboard-header h1 span {
+            background: var(--gradient-gold);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .btn-logout {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 22px;
+            font-size: 0.9rem;
+        }
+
+        .btn-logout:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .back-link {
+            color: var(--accent-gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: opacity 0.3s;
+        }
+
+        .back-link:hover {
+            opacity: 0.7;
+        }
+
+        /* ─── Tabs ─────────────────────────────────────── */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-btn {
+            background: transparent;
+            color: var(--text-secondary);
+            border: none;
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            position: relative;
+        }
+
+        .tab-btn.active {
+            color: var(--accent-gold);
+            border-bottom-color: var(--accent-gold);
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+        }
+
+        .tab-badge {
+            background: var(--danger);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 7px;
+            border-radius: 10px;
+            margin-left: 6px;
+            font-weight: 600;
+        }
+
+        .tab-badge.approved-badge {
+            background: var(--success);
+        }
+
+        /* ─── Review Cards ─────────────────────────────── */
+        .reviews-section {
+            display: none;
+        }
+
+        .reviews-section.active {
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .empty-state .empty-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .review-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 28px;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+            animation: fadeSlideIn 0.3s ease;
+        }
+
+        @keyframes fadeSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .review-card:hover {
+            border-color: rgba(212, 175, 55, 0.15);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .review-author {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .review-author strong {
+            font-size: 1.1rem;
+        }
+
+        .review-author .location {
+            color: var(--accent-gold);
+            font-size: 0.85rem;
+        }
+
+        .review-stars {
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        .review-message {
+            color: var(--text-secondary);
+            font-style: italic;
+            line-height: 1.7;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+        }
+
+        .review-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .review-meta {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 0.8rem;
+        }
+
+        .review-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* ─── Toast ────────────────────────────────────── */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            z-index: 9999;
+            animation: toastIn 0.3s ease;
+            max-width: 400px;
+        }
+
+        .toast-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .toast-error {
+            background: var(--danger);
+            color: white;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── Responsive ───────────────────────────────── */
+        @media (max-width: 600px) {
+            .login-card {
+                padding: 35px 25px;
+            }
+
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .review-footer {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .review-actions {
+                width: 100%;
+            }
+
+            .review-actions .btn {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Login Screen -->
+    <div class="login-container" id="login-screen">
+        <div class="login-card">
+            <img src="images/divine_logo.jpg" alt="Divine Cleaning Pros LLC">
+            <h1>Admin Panel</h1>
+            <p class="subtitle">Divine Cleaning Pros LLC</p>
+            <form id="login-form">
+                <input type="password" class="login-input" id="login-password" placeholder="Enter admin password"
+                    required autocomplete="current-password">
+                <p class="login-error" id="login-error"></p>
+                <button type="submit" class="btn btn-gold" id="login-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <div class="dashboard-header">
+            <h1>Review <span>Manager</span></h1>
+            <div class="header-actions">
+                <a href="index.html" class="back-link">← Back to Site</a>
+                <button class="btn btn-logout" id="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="pending">
+                Pending <span class="tab-badge" id="pending-count">0</span>
+            </button>
+            <button class="tab-btn" data-tab="approved">
+                Approved <span class="tab-badge approved-badge" id="approved-count">0</span>
+            </button>
+        </div>
+
+        <!-- Pending Reviews -->
+        <div class="reviews-section active" id="pending-section">
+            <div class="empty-state" id="pending-empty">
+                <div class="empty-icon">📭</div>
+                <p>No pending reviews</p>
+            </div>
+            <div id="pending-list"></div>
+        </div>
+
+        <!-- Approved Reviews -->
+        <div class="reviews-section" id="approved-section">
+            <div class="empty-state" id="approved-empty">
+                <div class="empty-icon">⭐</div>
+                <p>No approved reviews yet</p>
+            </div>
+            <div id="approved-list"></div>
+        </div>
+    </div>
+
+    <script>
+        const API = 'api/admin.php';
+
+        // ─── DOM ──────────────────────────────────────────
+        const loginScreen = document.getElementById('login-screen');
+        const dashboard = document.getElementById('dashboard');
+        const loginForm = document.getElementById('login-form');
+        const loginPassword = document.getElementById('login-password');
+        const loginError = document.getElementById('login-error');
+        const loginBtn = document.getElementById('login-btn');
+        const logoutBtn = document.getElementById('logout-btn');
+        const pendingList = document.getElementById('pending-list');
+        const approvedList = document.getElementById('approved-list');
+        const pendingEmpty = document.getElementById('pending-empty');
+        const approvedEmpty = document.getElementById('approved-empty');
+        const pendingCount = document.getElementById('pending-count');
+        const approvedCount = document.getElementById('approved-count');
+
+        // ─── Toast ────────────────────────────────────────
+        function showToast(message, type = 'success') {
+            const existing = document.querySelector('.toast');
+            if (existing) existing.remove();
+
+            const toast = document.createElement('div');
+            toast.className = `toast toast-${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+
+        // ─── Stars renderer ───────────────────────────────
+        function renderStars(rating) {
+            return '⭐'.repeat(rating) + '☆'.repeat(5 - rating);
+        }
+
+        // ─── Check auth on page load ──────────────────────
+        async function checkAuth() {
+            try {
+                const res = await fetch(`${API}?action=status`);
+                const data = await res.json();
+                if (data.authenticated) {
+                    showDashboard();
+                }
+            } catch (e) {
+                console.log('Auth check failed — showing login');
+            }
+        }
+
+        // ─── Login ────────────────────────────────────────
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loginError.textContent = '';
+            loginBtn.disabled = true;
+            loginBtn.textContent = 'Signing in...';
+
+            try {
+                const res = await fetch(API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        action: 'login',
+                        password: loginPassword.value
+                    })
+                });
+                const data = await res.json();
+
+                if (data.success) {
+                    showDashboard();
+                } else {
+                    loginError.textContent = data.error || 'Login failed.';
+                }
+            } catch (e) {
+                loginError.textContent = 'Connection error. Please try again.';
+            }
+
+            loginBtn.disabled = false;
+            loginBtn.textContent = 'Sign In';
+        });
+
+        // ─── Logout ───────────────────────────────────────
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await fetch(`${API}?action=logout`, { method: 'POST' });
+            } catch (e) { }
+            loginScreen.style.display = 'flex';
+            dashboard.style.display = 'none';
+            loginPassword.value = '';
+            showToast('Logged out successfully');
+        });
+
+        // ─── Show dashboard ───────────────────────────────
+        function showDashboard() {
+            loginScreen.style.display = 'none';
+            dashboard.style.display = 'block';
+            loadReviews();
+        }
+
+        // ─── Load reviews ─────────────────────────────────
+        async function loadReviews() {
+            try {
+                const [pendingRes, approvedRes] = await Promise.all([
+                    fetch(`${API}?action=pending`),
+                    fetch(`${API}?action=approved`)
+                ]);
+                const pendingData = await pendingRes.json();
+                const approvedData = await approvedRes.json();
+
+                renderPending(pendingData.reviews || []);
+                renderApproved(approvedData.reviews || []);
+            } catch (e) {
+                showToast('Failed to load reviews', 'error');
+            }
+        }
+
+        // ─── Render pending reviews ───────────────────────
+        function renderPending(reviews) {
+            pendingList.innerHTML = '';
+            pendingCount.textContent = reviews.length;
+            pendingEmpty.style.display = reviews.length === 0 ? 'block' : 'none';
+
+            reviews.forEach(review => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-author">
+                            <strong>${review.name}</strong>
+                            <span class="location">${review.location}</span>
+                        </div>
+                        <div class="review-stars">${renderStars(review.rating)}</div>
+                    </div>
+                    <p class="review-message">"${review.message}"</p>
+                    <div class="review-footer">
+                        <span class="review-meta">Submitted: ${review.submitted}</span>
+                        <div class="review-actions">
+                            <button class="btn btn-approve" onclick="approveReview('${review.id}')">✓ Approve</button>
+                            <button class="btn btn-reject" onclick="rejectReview('${review.id}')">✕ Reject</button>
+                        </div>
+                    </div>
+                `;
+                pendingList.appendChild(card);
+            });
+        }
+
+        // ─── Render approved reviews ──────────────────────
+        function renderApproved(reviews) {
+            approvedList.innerHTML = '';
+            approvedCount.textContent = reviews.length;
+            approvedEmpty.style.display = reviews.length === 0 ? 'block' : 'none';
+
+            reviews.forEach(review => {
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div class="review-header">
+                        <div class="review-author">
+                            <strong>${review.name}</strong>
+                            <span class="location">${review.location}</span>
+                        </div>
+                        <div class="review-stars">${renderStars(review.rating)}</div>
+                    </div>
+                    <p class="review-message">"${review.message}"</p>
+                    <div class="review-footer">
+                        <span class="review-meta">Approved: ${review.approved_at || review.submitted}</span>
+                        <div class="review-actions">
+                            <button class="btn btn-delete" onclick="deleteReview('${review.id}')">Remove</button>
+                        </div>
+                    </div>
+                `;
+                approvedList.appendChild(card);
+            });
+        }
+
+        // ─── Approve ──────────────────────────────────────
+        async function approveReview(id) {
+            try {
+                const res = await fetch(API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'approve', id })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Review approved and published!');
+                    loadReviews();
+                } else {
+                    showToast(data.error || 'Failed to approve', 'error');
+                }
+            } catch (e) {
+                showToast('Connection error', 'error');
+            }
+        }
+
+        // ─── Reject ───────────────────────────────────────
+        async function rejectReview(id) {
+            if (!confirm('Are you sure you want to reject this review? This cannot be undone.')) return;
+            try {
+                const res = await fetch(API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'reject', id })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Review rejected');
+                    loadReviews();
+                } else {
+                    showToast(data.error || 'Failed to reject', 'error');
+                }
+            } catch (e) {
+                showToast('Connection error', 'error');
+            }
+        }
+
+        // ─── Delete approved ──────────────────────────────
+        async function deleteReview(id) {
+            if (!confirm('Remove this review from the public site?')) return;
+            try {
+                const res = await fetch(API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'delete', id })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    showToast('Review removed');
+                    loadReviews();
+                } else {
+                    showToast(data.error || 'Failed to delete', 'error');
+                }
+            } catch (e) {
+                showToast('Connection error', 'error');
+            }
+        }
+
+        // ─── Tabs ─────────────────────────────────────────
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.reviews-section').forEach(s => s.classList.remove('active'));
+                btn.classList.add('active');
+                document.getElementById(`${btn.dataset.tab}-section`).classList.add('active');
+            });
+        });
+
+        // ─── Init ─────────────────────────────────────────
+        checkAuth();
+    </script>
+</body>
+
+</html>

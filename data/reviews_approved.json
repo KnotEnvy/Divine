@@ -1,0 +1,29 @@
+[
+    {
+        "id": "seed001",
+        "name": "Maria S.",
+        "location": "New Smyrna Beach",
+        "rating": 5,
+        "message": "My home has never looked this good. The team was professional, thorough, and left every surface sparkling. I'm a client for life!",
+        "submitted": "2025-12-01 10:00:00",
+        "approved_at": "2025-12-01 10:00:00"
+    },
+    {
+        "id": "seed002",
+        "name": "James R.",
+        "location": "Edgewater",
+        "rating": 5,
+        "message": "We use Divine Cleaning for our office every week. Our employees and clients always comment on how immaculate everything looks.",
+        "submitted": "2025-12-15 14:30:00",
+        "approved_at": "2025-12-15 14:30:00"
+    },
+    {
+        "id": "seed003",
+        "name": "Ashley T.",
+        "location": "Port Orange",
+        "rating": 5,
+        "message": "They did our move-out clean and we got our full deposit back. Absolutely meticulous attention to detail. Highly recommend!",
+        "submitted": "2026-01-10 09:15:00",
+        "approved_at": "2026-01-10 09:15:00"
+    }
+]

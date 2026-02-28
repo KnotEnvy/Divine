@@ -1,0 +1,13 @@
+# Deny access to all files in this directory
+# This prevents direct HTTP access to the JSON data files
+
+<IfModule mod_authz_core.c>
+    # Apache 2.4+
+    Require all denied
+</IfModule>
+
+<IfModule !mod_authz_core.c>
+    # Apache 2.2
+    Order Allow,Deny
+    Deny from all
+</IfModule>

@@ -94,7 +94,7 @@
             </div>
         </div>
 
-        
+
     </section>
 
     <!-- Trust Stats Banner -->
@@ -155,10 +155,10 @@
 
                 <!-- Card 3 -->
                 <div class="service-card fade-in-up delay-3">
-                    <div class="card-icon">🏢</div>
-                    <h3>Commercial Properties</h3>
-                    <p>A pristine workspace reflects an elite business. We provide discreet, thorough cleaning for
-                        offices and commercial spaces.</p>
+                    <div class="card-icon">🏖️</div>
+                    <h3>Vacation Rentals</h3>
+                    <p>Impress every guest with a spotless turnover. We ensure your rental is pristine, welcoming,
+                        and ready for five-star reviews.</p>
                 </div>
             </div>
         </div>
@@ -197,8 +197,9 @@
                 <p>Don't just take our word for it — hear from homeowners who've experienced the divine difference.</p>
             </div>
 
-            <div class="testimonials-grid">
-                <div class="testimonial-card fade-in-up delay-1">
+            <div class="testimonials-grid" id="testimonials-grid">
+                <!-- Testimonials loaded dynamically via JS; fallback hardcoded cards below -->
+                <div class="testimonial-card fade-in-up delay-1" data-fallback>
                     <div class="stars">⭐⭐⭐⭐⭐</div>
                     <p class="testimonial-quote">"My home has never looked this good. The team was professional,
                         thorough, and left every surface sparkling. I'm a client for life!"</p>
@@ -208,7 +209,7 @@
                     </div>
                 </div>
 
-                <div class="testimonial-card fade-in-up delay-2">
+                <div class="testimonial-card fade-in-up delay-2" data-fallback>
                     <div class="stars">⭐⭐⭐⭐⭐</div>
                     <p class="testimonial-quote">"We use Divine Cleaning for our office every week. Our employees and
                         clients always comment on how immaculate everything looks."</p>
@@ -218,7 +219,7 @@
                     </div>
                 </div>
 
-                <div class="testimonial-card fade-in-up delay-3">
+                <div class="testimonial-card fade-in-up delay-3" data-fallback>
                     <div class="stars">⭐⭐⭐⭐⭐</div>
                     <p class="testimonial-quote">"They did our move-out clean and we got our full deposit back.
                         Absolutely meticulous attention to detail. Highly recommend!"</p>
@@ -228,8 +229,53 @@
                     </div>
                 </div>
             </div>
+
+            <div class="review-cta fade-in-up">
+                <button class="btn btn-outline btn-large" id="open-review-modal">✍️ Leave a Review</button>
+            </div>
         </div>
     </section>
+
+    <!-- Review Submission Modal -->
+    <div class="modal-overlay" id="review-modal">
+        <div class="modal-content">
+            <button class="modal-close" id="close-review-modal" aria-label="Close">&times;</button>
+            <h3>Share Your <span class="gold-text">Experience</span></h3>
+            <p class="modal-subtitle">Your review helps us continue to deliver divine service.</p>
+
+            <form id="review-form" novalidate>
+                <input type="text" name="name" placeholder="Your Name" required class="form-input" maxlength="100">
+                <input type="text" name="location" placeholder="Your City (e.g., New Smyrna Beach)" required
+                    class="form-input" maxlength="100">
+
+                <!-- Star Rating Picker -->
+                <div class="star-rating-picker">
+                    <label>Your Rating</label>
+                    <div class="star-picker" id="star-picker">
+                        <span class="pick-star" data-value="1">★</span>
+                        <span class="pick-star" data-value="2">★</span>
+                        <span class="pick-star" data-value="3">★</span>
+                        <span class="pick-star" data-value="4">★</span>
+                        <span class="pick-star" data-value="5">★</span>
+                    </div>
+                    <input type="hidden" name="rating" id="rating-value" value="0">
+                </div>
+
+                <textarea name="message" placeholder="Tell us about your experience..." required
+                    class="form-input form-textarea" maxlength="1000" rows="4"></textarea>
+
+                <!-- Honeypot -->
+                <input type="text" name="website" class="form-honeypot" tabindex="-1" autocomplete="off">
+                <!-- CSRF -->
+                <input type="hidden" name="csrf_token" id="review-csrf-token" value="">
+
+                <button type="submit" class="btn btn-gold btn-large submit-btn" id="review-submit-btn">Submit
+                    Review</button>
+            </form>
+
+            <div class="form-feedback" id="review-feedback"></div>
+        </div>
+    </div>
 
     <!-- Contact / CTA Section -->
     <section class="section cta" id="contact">
@@ -239,18 +285,28 @@
             <h2>Ready for a <span class="gold-text">Divine</span> Experience?</h2>
             <p>Request your free, custom quote today and discover the standard of clean you deserve.</p>
 
-            <form class="quote-form" id="quote-form">
-                <input type="text" placeholder="Your Name" required class="form-input">
-                <input type="email" placeholder="Email Address" required class="form-input">
-                <input type="tel" placeholder="Phone Number" required class="form-input">
-                <select class="form-input form-select" required>
+            <form class="quote-form" id="quote-form" novalidate>
+                <input type="text" name="name" placeholder="Your Name" required class="form-input" maxlength="100">
+                <input type="email" name="email" placeholder="Email Address" required class="form-input">
+                <input type="tel" name="phone" placeholder="Phone Number" required class="form-input" maxlength="20">
+                <select name="service" class="form-input form-select" required>
                     <option value="" disabled selected>Select a Service</option>
                     <option value="deep">Luxury Deep Cleaning</option>
                     <option value="recurring">Recurring Maintenance</option>
-                    <option value="commercial">Commercial Properties</option>
+                    <option value="vacation">Vacation Rentals</option>
                 </select>
-                <button type="submit" class="btn btn-gold btn-large submit-btn">Request Quote</button>
+                <textarea name="message" placeholder="Tell us more about your needs (optional)"
+                    class="form-input form-textarea" maxlength="1000" rows="3"></textarea>
+
+                <!-- Honeypot -->
+                <input type="text" name="website" class="form-honeypot" tabindex="-1" autocomplete="off">
+                <!-- CSRF -->
+                <input type="hidden" name="csrf_token" id="contact-csrf-token" value="">
+
+                <button type="submit" class="btn btn-gold btn-large submit-btn" id="contact-submit-btn">Request
+                    Quote</button>
             </form>
+            <div class="form-feedback" id="contact-feedback"></div>
         </div>
     </section>
 
@@ -293,6 +349,9 @@
                 d="M20 15.5c-1.25 0-2.45-.2-3.57-.57a1.02 1.02 0 0 0-1.02.24l-2.2 2.2a15.045 15.045 0 0 1-6.59-6.59l2.2-2.21a.96.96 0 0 0 .25-1A11.36 11.36 0 0 1 8.5 4c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1 0 9.39 7.61 17 17 17 .55 0 1-.45 1-1v-3.5c0-.55-.45-1-1-1zM19 12h2a9 9 0 0 0-9-9v2c3.87 0 7 3.13 7 7zm-4 0h2c0-2.76-2.24-5-5-5v2c1.66 0 3 1.34 3 3z" />
         </svg>
     </a>
+
+    <!-- Toast Container -->
+    <div id="toast-container"></div>
 
     <!-- JS -->
     <script src="script.js"></script>
